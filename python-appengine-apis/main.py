@@ -1,4 +1,5 @@
 import logging
+import urllib
 import urllib2
 import webapp2
 
@@ -14,7 +15,7 @@ giphy_url = ('http://api.giphy.com/v1/gifs/search?api_key={}&q=hello&limit=1'
     .format(api_key_giphy))
 '''
 
-def call_rest_api():
+def call_rest_api(user_query):
     # HIGHLY recommend storing API keys in separate file
     # Add the key file to .gitignore (so not in GitHub)
     api_key_maps = "[YOUR MAPS API KEY]"
@@ -23,9 +24,11 @@ def call_rest_api():
     with open('api_keys/maps.txt','r') as f:
         api_key_maps = f.read()
 
+    query = urllib.quote_plus(user_query)
+
     print(api_key_maps)
-    maps_url = ("https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key={}"
-        .format(api_key_maps))
+    maps_url = ("https://maps.googleapis.com/maps/api/geocode/json?address={}&key={}"
+        .format(query, api_key_maps))
     try:
         result = urllib2.urlopen(maps_url)
         return result.read()
@@ -35,7 +38,8 @@ def call_rest_api():
 
 class MainPage(webapp2.RequestHandler):
     def get(self):
-        response = call_rest_api()
+        user_query = "1600 Amphitheatre Parkway, Mountain View, CA"
+        response = call_rest_api(user_query)
         self.response.headers['Content-Type'] = 'text/plain'
         self.response.write(response)
 
