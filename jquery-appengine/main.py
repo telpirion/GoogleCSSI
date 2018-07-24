@@ -26,8 +26,19 @@ class SPAPage(webapp2.RequestHandler):
         spa_template = jinja_env.get_template('templates/spa.html')
         self.response.write(spa_template.render())
 
+class ButtonTogglePage(webapp2.RequestHandler):
+    def get(self):
+        render_vars = {
+            "button_1": "hide",
+            "button_2": "show"
+        }
+        button_template = jinja_env.get_template('templates/button-toggle.html')
+        self.response.write(button_template .render(render_vars))
+
+
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/material', MaterialPage),
     ('/spa', SPAPage),
+    ('/button-toggle', ButtonTogglePage),
 ], debug=True)
