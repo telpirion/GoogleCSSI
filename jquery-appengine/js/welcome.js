@@ -19,5 +19,5 @@ Stuff to try:
 
 */
 window.onload = function () {
-    $("p").text("Here's some new text, courtesy of jQuery!");
+    $("p").first().text("Here's some new text, courtesy of jQuery!");
 }
