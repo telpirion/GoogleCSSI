@@ -35,10 +35,15 @@ class ButtonTogglePage(webapp2.RequestHandler):
         button_template = jinja_env.get_template('templates/button-toggle.html')
         self.response.write(button_template .render(render_vars))
 
+class AudioPage(webapp2.RequestHandler):
+    def get(self):
+        audio_template = jinja_env.get_template('templates/audio.html')
+        self.response.write(audio_template.render())
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/material', MaterialPage),
     ('/spa', SPAPage),
     ('/button-toggle', ButtonTogglePage),
+    ('/audio', AudioPage),
 ], debug=True)
