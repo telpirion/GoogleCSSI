@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <title>Wands</title>
+     <style>
+      .form {
+        border-width: 2px;
+        background-color: #ccc;
+        width: 600px;
+      }
+      .form form {
+        padding-top: 10px;
+        margin-left: 10px;
+        padding-bottom: 10px;
+      }
+     </style>
+  </head>
+  <body>
+    <section>
+      <h1>Wands</h1>
+      {% for wand in wands %}
+        <h2> {{wand.material}} with a {{wand.core}} core</h2>
+        <p>
+          {% if wand.owner != None %}
+            {% set owner = wand.owner.get() %}
+            This wand is used by {{owner.first_name}} {{owner.last_name}}
+          {% endif %}
+        </p>
+      {% endfor %}
+    </section>
+    <section class="form">
+      <form method="post">
+        <h1>Add new wand</h1>
+        <input name="core" placeholder="Wand core" /><br><br>
+        <input name="material" placeholder="Wand material" /><br><br>
+        <input name="length" placeholder="Wand length" /><br><br>
+
+        <h2>Owner</h2>
+        <input name="owner_first_name" placeholder="first_name" />
+        <input name="owner_last_name" placeholder="last_name" /><br><br>
+        <button>Submit</button>
+      </form>
+    </section>
+  </body>
+</html>
