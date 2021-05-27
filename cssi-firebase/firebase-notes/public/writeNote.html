@@ -3,22 +3,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fire Notes</title>
+    <title>Fire Notes: Write Notes</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.0/css/bulma.min.css" />
-	<link rel="stylesheet" href="css/noteForm.css">
+
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/8.3.1/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->
     <script defer src="/__/firebase/8.3.1/firebase-auth.js"></script>
     <script defer src="/__/firebase/8.3.1/firebase-database.js"></script>
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+
+    <!-- Developer defined -->
+    <link rel="stylesheet" href="css/writeNote.css">
     <script src="js/writeNote.js"></script>
+    <script src="components/navbar.js"></script>
+    <script src="components/footer.js"></script>    
   </head>
   <body>
-
+    <x-navbar></x-navbar>
     <section class="hero is-fullheight">
       <div class="hero-body">
         <div class="container has-text-centered">
@@ -33,10 +38,6 @@
               <h1 class="subtitle is-5">
                 —Andre Gide
               </h1>
-              <a href="viewNotes.html">
-                <button class="button is-link has-text-weight-medium is-medium is-centered">Click Here</button>
-              </a>
-              to view your notes.
             </div>
 
             <!-- NOTE FORM -->
@@ -63,6 +64,6 @@
         </div>
       </div>
     </section>
-
+    <x-footer></x-footer>    
   </body>
 </html>
