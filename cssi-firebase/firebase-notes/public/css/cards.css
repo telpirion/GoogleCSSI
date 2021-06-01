@@ -6,11 +6,22 @@ input::placeholder {
   background: var(--card-bg);
 }
 
+
 /* Card start*/
 .card {
   overflow: hidden;
+}
+
+.card-happy {
   background: yellow;
-  /* color: var(--bg); */
+}
+
+.card-meh {
+    background-color: lightgreen;
+}
+
+.card-sad {
+  background: lightblue;
 }
 
 .card.large {

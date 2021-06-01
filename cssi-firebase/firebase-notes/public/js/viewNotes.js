@@ -1,4 +1,4 @@
-let googleUserId;
+let googleUserId, sentiment;
 
 window.onload = evt => {
     // Use this to retain user state between html pages.
@@ -13,6 +13,11 @@ window.onload = evt => {
             window.location = 'index.html';
         };
     });
+
+    // Next, load the text sentiment analysis model.
+    sentiment = ml5.sentiment('movieReviews', () => {
+        console.log('Model ready!');
+    })
 };
 
 const getNotes = userId => {
@@ -33,13 +38,35 @@ const renderDataAsHtml = data => {
     document.querySelector('#app').innerHTML = cards;
 };
 
+// Determines the emotional state, given a score of 0 (sad) to 1 (happy).
+const determineEmotionalState = (score) => {
+    if (score > 0.75) {
+        return {
+            state: 'happy',
+            emoticon: 'grinning'
+        };
+    } else if (score > 0.3) {
+        return {
+            state: 'meh',
+            emoticon: 'neutral-face'
+        };
+    } else {
+        return {
+            state: 'sad',
+            emoticon: 'cry'
+        };
+    }
+}
+
 const createCard = (note, noteId) => {
+    const emotionalState = determineEmotionalState(note.score);
+
     let innerHTML = "";
     innerHTML += `<div class="column is-one-quarter">`
-    innerHTML += `<div class="card">`
+    innerHTML += `<div class="card card-${emotionalState.state}">`
     innerHTML += `<header class="card-header">`
     innerHTML += `<p class="card-header-title">`
-    innerHTML += `${note.title}`
+    innerHTML += `${note.title}&nbsp <span class='ec ec-${emotionalState.emoticon}'></span>`
     innerHTML += `</p>`
     innerHTML += `</header>`
     innerHTML += `<div class="card-content">`
@@ -80,14 +107,22 @@ const editNote = (noteId) => {
 };
 
 const handleSaveEdit = (noteId) => {
-  const noteTitle = document.querySelector('#editTitleInput').value;
-  const noteText = document.querySelector('#editTextInput').value;
-  var noteEdits = {
-    title: noteTitle,
-    text: noteText
-  };
-  firebase.database().ref(`users/${googleUserId}/${noteId}`).update(noteEdits);
-  closeEditModal();
+    const noteTitle = document.querySelector('#editTitleInput').value;
+    const noteText = document.querySelector('#editTextInput').value;
+
+    const message = `${noteTitle}. ${noteText}`;
+
+    // Get the text sentiment as a value between 0 (negative) and 1 (positive)
+    const sentimentPrediction = sentiment.predict(message);
+    console.log(sentimentPrediction);
+
+    var noteEdits = {
+        title: noteTitle,
+        text: noteText,
+        score: sentimentPrediction.score
+    };
+    firebase.database().ref(`users/${googleUserId}/${noteId}`).update(noteEdits);
+    closeEditModal();
 }
 
 const closeEditModal = () => {

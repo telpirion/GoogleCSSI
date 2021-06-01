@@ -14,7 +14,15 @@ const footerTemplate = `
         <div class="content has-text-centered">
           <p>
             <strong>Bulma</strong> by <a href="http://jgthms.com">Jeremy Thomas</a>.
-            The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. <br>
+            The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+          </p>
+          <p>
+            <strong>ml5.js</strong> is an open source machine learning library in JavaScript. See
+            the <a href="https://ml5js.org/">documentation</a> for more information.
+          </p>
+          <p>
+            <strong>emoji.css</strong> is an <a href='https://ionicabizau.github.io/emoji.css/'>open source CSS style sheet</a>.
+            The source code is licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
           </p>
         </div>
       </div>
